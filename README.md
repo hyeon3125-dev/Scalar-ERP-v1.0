@@ -1,28 +1,14 @@
----
-
 📦 Scalar ERP v1.0 – Serverless MES on Google Sheets
-
 "Spreadsheet? No. This is a state‑machine based inventory & settlement engine that runs on Google infrastructure."
+Scalar ERP turns Google Sheets into a lightweight, state‑driven ERP engine. It runs on Python (gspread) or pure Google Apps Script – no servers, no databases, no expensive licenses. This is a production implementation of the Scalar Architecture applied to inventory, BOM explosion, and settlement workflows.
 
-Scalar ERP turns Google Sheets into a lightweight, state‑driven ERP engine.
-It runs on Python (gspread) or pure Google Apps Script – no servers, no databases, no expensive licenses.
-This is a production implementation of the Scalar Architecture applied to inventory, BOM explosion, and settlement workflows.
-
----
+✍️ Author's Note
+"What you're looking at looks like an Excel file. But it's not Excel. That's the point – minimal surface, maximum compression. No expensive licenses. No complicated setup. Just a sheet that thinks it's an ERP."
 
 🚀 How It Works (For Normal Humans)
-
-Concept What It Means
-State Machine Purchase Order → BOM → Material need → Stock check → Shortage alert → Payment settlement
-Serverless No setup. No hosting. Just a Google Sheet and 3 minutes.
-Two Engines Python (for batch/automation) OR Apps Script (click‑to‑run inside Sheets)
-Self‑Checking Built‑in validator automatically tells you if data is wrong
-
----
+Concept What It Means State Machine Purchase Order → BOM → Material need → Stock check → Shortage alert → Payment settlement Serverless No setup. No hosting. Just a Google Sheet and 3 minutes. Two Engines Python (for batch/automation) OR Apps Script (click‑to‑run inside Sheets) Self‑Checking Built‑in validator automatically tells you if data is wrong
 
 🧩 What's Inside
-
-```
 Scalar-ERP-Core/
 ├── service_account.json      # GCP key (you generate)
 ├── app.py                    # Auto‑creates sheets + headers
@@ -32,15 +18,9 @@ Scalar-ERP-Core/
 ├── update_and_settle.py      # Shipped → payment entries
 ├── setup_security.py         # Dropdowns + header protection
 └── Scalar_ERP_Code.gs        # Full Apps Script (copy‑paste)
-```
-
----
 
 🔐 One‑Click Apps Script (Copy, Paste, Run)
-
 Open your Google Sheet → Extensions → Apps Script → paste this:
-
-```javascript
 /**
  * Scalar ERP Kernel v2.1 (Security Hardened)
  * License: MIT
@@ -378,71 +358,40 @@ That's it. No terminal. No Python. Just clicks.
 ```bash
 pip install gspread pandas google-auth
 python engine.py
-```
-
----
 
 ✅ Integrity Check
-
 Run this to compare Python output vs. sheet data:
-
-```bash
 python verification_engine.py
-```
-
 Expected:
-
-```
 🟢 PASSED – All data integrity constraints satisfied.
-```
-
----
 
 📜 License
-
 MIT – Use it, break it, fix it, ship it.
 
----
+🔐 Security Hardening
+This code is safe to share publiclybecause:
+1. No hardcoded credentials – All sheet names are configurable at the top
+2. No service account keys – Uses the sheet owner's OAuth context
+3. LockService prevents race conditions – Multiple users can't corrupt data
+4. Input sanitization – sanitizeNumber() prevents NaN corruption
+5. Column auto‑detection – Works even if users rename columns
+6. Multi‑language support – Korean/English column names both work
 
-✍️ Author's Note
-
-"What you're looking at looks like an Excel file. But it's not Excel.
-That's the point – minimal surface, maximum compression.
-No expensive licenses. No complicated setup. Just a sheet that thinks it's an ERP."
-
----
-
-## 🔐 Security Hardening
-
-This code is **safe to share publicly** because:
-
-1. **No hardcoded credentials** – All sheet names are configurable at the top
-2. **No service account keys** – Uses the sheet owner's OAuth context
-3. **LockService prevents race conditions** – Multiple users can't corrupt data
-4. **Input sanitization** – `sanitizeNumber()` prevents NaN corruption
-5. **Column auto‑detection** – Works even if users rename columns
-6. **Multi‑language support** – Korean/English column names both work
-
----
-
-## Installation (3 minutes)
-
-1. **Create a new Google Sheet**
-2. **Extensions → Apps Script**
-3. **Delete all code** and paste the code above
-4. **Save** (Ctrl+S)
-5. **Refresh** your sheet
-6. Look for the **🚀 SCALAR ERP** menu
-
-### First Time Setup
-
+Installation (3 minutes)
+1. Create a new Google Sheet
+2. Extensions → Apps Script
+3. Delete all code and paste the code above
+4. Save (Ctrl+S)
+5. Refresh your sheet
+6. Look for the 🚀 SCALAR ERP menu
+First Time Setup
 Before running the engine, make sure your sheet has these tabs:
-- `TRX_발주` (Orders) with columns: 품목, 수량, 상태
-- `MST_BOM` (物料清单) with columns: 완성품, 자재명, 소요량(Qty)
-- `TRX_재고` (Inventory) with columns: 품목코드, 현재고, 안전재고
-- `TRX_결제마감` (Settlement) – auto-created
+* TRX_발주 (Orders) with columns: 품목, 수량, 상태
+* MST_BOM (物料清单) with columns: 완성품, 자재명, 소요량(Qty)
+* TRX_재고 (Inventory) with columns: 품목코드, 현재고, 안전재고
+* TRX_결제마감 (Settlement) – auto-created
 
 ---
 
-Built with ☕ and state machines.
-Questions? Open an issue. Improvements? Send a PR.
+Built with ☕ and state machines. Questions? Open an issue. Improvements? Send a PR.
+
